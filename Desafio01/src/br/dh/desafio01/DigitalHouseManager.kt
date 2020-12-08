@@ -10,7 +10,7 @@ class DigitalHouseManager {
     var listaProfessorAdjunto = mutableListOf<ProfessorAdjunto>()
     var listaCurso = mutableListOf<Curso>()
     var listaMatricula = mutableListOf<Matricula>()
-
+    var listaProfessor = mutableListOf<Professor>()
 
 
     fun registrarCurso(nome: String, codCurso: Int, quantidadeMaxAlunos: Int) {
@@ -61,8 +61,10 @@ class DigitalHouseManager {
         listaProfessorAdjunto.removeAt(codProfessor)
         println("O(a) professor(a) adjunto $nome foi removido com sucesso.")
 
-    }fun matricularAluno (nome: String, sobrenome: String, codAluno: Int, ){
-        val novoAluno = Aluno(nome,sobrenome,codAluno)
+    }
+
+    fun matricularAluno(nome: String, sobrenome: String, codAluno: Int, ) {
+        val novoAluno = Aluno(nome, sobrenome, codAluno)
         listaAluno.add(novoAluno)
         println("O(a) Aluno(a)  $nome foi matriculado com sucesso.")
     }
@@ -78,33 +80,76 @@ class DigitalHouseManager {
     }
 
 
-    fun matricularAlunoCurso(codAluno: Int,codCurso: Int){
+    fun matricularAlunoCurso(codAluno: Int, codCurso: Int) {
 
         val aluno = listaAluno[verificarCodAluno(codAluno)]
         val curso = listaCurso[verificarCodCurso(codCurso)]
         val matricula = Matricula(aluno, curso)
 
-        if (curso.vagasNaTurma()){
-        }else{println("Não foi possível fazer  matrícula de ${aluno.nome} ${aluno.sobrenome}.Curso com capacidade máxima de alunos")}
+        if (curso.vagasNaTurma()) {
+        } else {
+            println("Não foi possível fazer  matrícula de ${aluno.nome} ${aluno.sobrenome}.Curso com capacidade máxima de alunos")
+        }
 
     }
+
     fun verificarCodCurso(codCurso: Int): Int {
 
-        for ((index) in listaCurso.withIndex()){if (listaCurso[index].codCurso == codCurso){return index}}
+        for ((index) in listaCurso.withIndex()) {
+            if (listaCurso[index].codCurso == codCurso) {
+                return index
+            }
+        }
         return -1
     }
+
     fun vagasNaTurma(): Boolean {
         val quantidadeMaxAlunos: Int.Companion = Int
         if (listaAluno.size < quantidadeMaxAlunos.MAX_VALUE) {
-             return true}
-        else{
+            return true
+        } else {
             println("Turma Lotada ${listaAluno.size}. Capacidade máxima de alunos: $quantidadeMaxAlunos")
             return false
         }
     }
-}
+}/*
+    fun alocarProfessores(nome: String,codCurso: Int, codProfessorTitular: Int, codProfessorAdjunto: Int){
+        val titular = encontrarProfessor(codProfessorTitular)
+        val adjunto = encontrarProfessor(codProfessorAdjunto)
+        val curso = encontrarCurso(codCurso)
 
+        if (titular != null && adjunto != null && curso != null){
 
+            if (curso.professorAdjunto == null && curso.professorTitular == null){
+                curso.professorAdjunto = adjunto as ProfessorAdjunto?
+                curso.professorTitular = titular as ProfessorTitular?
+                println("Professores ${titular.nome} e ${adjunto.nome} alocados no curso ${curso.nome}")
+            }else{
+                println("O curso ${curso.nome} já possui os professores ${curso.professorTitular?.nome} e ${curso.professorAdjunto?.nome} alocados")
+            }
+        }else{
+            println("Dados para alocação não encontrados")
+        }
+    }
 
+    private fun encontrarCurso(codCurso: Int): Curso? {
+        var cursoEncontrado: Curso? = null
+        listaCurso.forEach{curso->
+            if(curso.codCurso == codCurso) {
+                cursoEncontrado = curso
+            }
+        }
+        return cursoEncontrado
+    }
 
+    private fun encontrarProfessor(codProfessorTitular: Int, codProfessorAdjunto: Int): Professor? {
+        var professorEncontrado: Professor? = null
+        listaProfessor.forEach{professor->
+            if(professor.codProfessor == codProfessorTitular && professor.codProfessor == codProfessorAdjunto) {
+                professorEncontrado = professor
+            }
+        }
+        return professorEncontrado
+    }
 
+}*/

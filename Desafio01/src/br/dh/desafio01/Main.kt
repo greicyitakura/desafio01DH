@@ -27,7 +27,7 @@ fun main () {
     digitalHouseManager.matricularAluno("Henrique", "Igla", 15)
     digitalHouseManager.matricularAluno("Ingrid", "Jacks", 16)
 
-    println(digitalHouseManager.listaAluno)
+    println(digitalHouseManager.listaAluno.size)
 
 
     //Matricular alunos no curso
@@ -35,10 +35,12 @@ fun main () {
     digitalHouseManager.matricularAlunoCurso(13,20001)
     digitalHouseManager.matricularAlunoCurso(14,20001)
 
-    //digitalHouseManager.matricularAlunoCurso(15,20002)
     digitalHouseManager.matricularAlunoCurso(16,20002)
+    digitalHouseManager.matricularAlunoCurso(15,20002)
 
-    digitalHouseManager.matricularAlunoCurso(15,20001)
+    println(digitalHouseManager.listaCurso.size)
 
+
+    //Alocar Professor
 }
 
