@@ -1,23 +1,33 @@
 package br.dh.desafio01
 
+import br.dh.desafio01.Curso as Curso
+
 class DigitalHouseManager {
 
 
-    val listaAluno = mutableListOf<Aluno>()
-    val listaProfessorTitular = mutableListOf<ProfessorTitular>()
-    val listaProfessorAdjunto = mutableListOf<ProfessorAdjunto>()
-    val listaCurso = mutableListOf<Curso>()
-    val listaMatricula = mutableListOf<Matricula>()
+    var listaAluno = mutableListOf<Aluno>()
+    var listaProfessorTitular = mutableListOf<ProfessorTitular>()
+    var listaProfessorAdjunto = mutableListOf<ProfessorAdjunto>()
+    var listaCurso = mutableListOf<Curso>()
+    var listaMatricula = mutableListOf<Matricula>()
+
 
 
     fun registrarCurso(nome: String, codCurso: Int, quantidadeMaxAlunos: Int) {
         val curso = Curso(nome, codCurso, quantidadeMaxAlunos)
         listaCurso.add(curso)
+        println("Curso $nome adicionado com sucesso")
 
     }
 
-    fun excluirCurso(nome: String, codCurso: Int, ) {
-        listaCurso.removeAt(codCurso)
+    fun excluirCurso(nome: String, codCurso: Int) {
+        val curso = listaCurso
+        if (curso != null) {
+            listaCurso.remove(curso)
+            println("Curso ${curso} removido com sucesso")
+        } else {
+            println("Curso não encontrado")
+        }
     }
 
     fun registrarProfessorAdjunto(
@@ -28,6 +38,7 @@ class DigitalHouseManager {
 
         val professorAdjunto = ProfessorAdjunto(nome, sobrenome, 0, codProfessor, qntHorasMentoria)
         listaProfessorAdjunto.add(professorAdjunto)
+        println("O professor adjunto $nome foi registrado com sucesso.")
 
     }
 
@@ -40,63 +51,59 @@ class DigitalHouseManager {
 
         val professorTitular = ProfessorTitular(nome, sobrenome, tempoDeCasa, codProfessor, especialidade)
         listaProfessorTitular.add(professorTitular)
+        println("O(a) professor(a) titular $nome foi registrado com sucesso.")
 
     }
 
-    fun excluirProfessor(codProfessor: Int) {
+    fun excluirProfessor(nome: String, codProfessor: Int) {
         listaProfessorTitular.removeAt(codProfessor)
+        println("O(a) professor(a) titular $nome foi removido com sucesso.")
         listaProfessorAdjunto.removeAt(codProfessor)
+        println("O(a) professor(a) adjunto $nome foi removido com sucesso.")
+
+    }fun matricularAluno (nome: String, sobrenome: String, codAluno: Int, ){
+        val novoAluno = Aluno(nome,sobrenome,codAluno)
+        listaAluno.add(novoAluno)
+        println("O(a) Aluno(a)  $nome foi matriculado com sucesso.")
     }
-    fun matricularAluno (nome: String, sobrenome: String, codAluno: Int){
-       val novoaluno = Aluno(nome,sobrenome,codAluno)
-        listaAluno.add(novoaluno)
 
-    }
-    fun matricularAlunoCurso(codCurso: Int, codAluno: Int) {
-        val aluno = encontrarAluno(codAluno)
-        val curso = encontrarCurso(codCurso)
-        val novaMatricula = Matricula(aluno, curso)
 
-        if (aluno != null && curso != null)
-
-        if (curso.adicionarUmAluno(aluno)) {
-            listaMatricula.add(novaMatricula)
-                println("Aluno ${aluno.nome} foi matriculado no curso de ${curso.nome} com sucesso! " +
-                        "\n Data da matrícula realizada: ${novaMatricula.dataMatricula}")
-
-        } else {
-            println("Não foi possível realizar a matrícula! Curso com capacidade máxima de ${curso.quantidadeMaxAlunos}")
-        }
-
-    }
-    fun encontrarAluno(codAluno: Int): Aluno? {
-        var alunoEncontrado: Aluno? = null
-        listaAluno.forEach {aluno->
-            if(aluno.codAluno == codAluno) {
-                alunoEncontrado == aluno
+    fun verificarCodAluno(codAluno: Int): Int {
+        for ((index) in listaAluno.withIndex()) {
+            if (listaAluno[index].codAluno == codAluno) {
+                return index
             }
         }
-        return alunoEncontrado
+        return -1
     }
-     fun encontrarCurso(codCurso: Int): Curso? {
-        var cursoEncontrado: Curso? = null
-        listaCurso.forEach{curso->
-            if(curso.codCurso == codCurso) {
-                cursoEncontrado == curso
-            }
+
+
+    fun matricularAlunoCurso(codAluno: Int,codCurso: Int){
+
+        val aluno = listaAluno[verificarCodAluno(codAluno)]
+        val curso = listaCurso[verificarCodCurso(codCurso)]
+        val matricula = Matricula(aluno, curso)
+
+        if (curso.vagasNaTurma()){
+        }else{println("Não foi possível fazer  matrícula de ${aluno.nome} ${aluno.sobrenome}.Curso com capacidade máxima de alunos")}
+
+    }
+    fun verificarCodCurso(codCurso: Int): Int {
+
+        for ((index) in listaCurso.withIndex()){if (listaCurso[index].codCurso == codCurso){return index}}
+        return -1
+    }
+    fun vagasNaTurma(): Boolean {
+        val quantidadeMaxAlunos: Int.Companion = Int
+        if (listaAluno.size < quantidadeMaxAlunos.MAX_VALUE) {
+             return true}
+        else{
+            println("Turma Lotada ${listaAluno.size}. Capacidade máxima de alunos: $quantidadeMaxAlunos")
+            return false
         }
-        return cursoEncontrado
     }
-    fun alocarProfessores(codCurso: Int, codProfessor: Int, ){
-
-        var professorTitular: ProfessorTitular? = listaProfessorTitular[codProfessor]
-        var professorAdjunto: ProfessorAdjunto? = listaProfessorAdjunto[codProfessor]
-
-        listaCurso[codCurso]?.professorTitular = professorTitular
-        listaCurso[codCurso]?.professorAdjunto = professorAdjunto
-    }
-
 }
+
 
 
 

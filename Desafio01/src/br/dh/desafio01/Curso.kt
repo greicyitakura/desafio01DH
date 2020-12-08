@@ -5,13 +5,17 @@ open class Curso(
         val codCurso: Int,
         val quantidadeMaxAlunos: Int,
         var professorTitular: ProfessorTitular? = ProfessorTitular("", "", 0, 0,""),
-        var professorAdjunto: ProfessorAdjunto? = ProfessorAdjunto("", "", 0, 0, 0)
-) {
+        var professorAdjunto: ProfessorAdjunto? = ProfessorAdjunto("", "", 0, 0, 0),
 
-    val alunosMatriculados = mutableListOf<Aluno>()
+) {
+    var listaAluno = mutableListOf<Aluno>()
+
+    var alunosMatriculados: MutableList<Aluno> = mutableListOf<Aluno>()
 
     fun adicionarUmAluno(umAluno: Aluno): Boolean {
         if (alunosMatriculados.size <= quantidadeMaxAlunos) {
+            alunosMatriculados.add(umAluno)
+            println("\nAluno ${umAluno.nome} ${umAluno.sobrenome} adicionado ao curso")
             alunosMatriculados.add(umAluno)
             return true
         } else return false
@@ -30,6 +34,15 @@ open class Curso(
         if (codCurso != other.codCurso) return false
 
         return true
+    }
+
+    fun vagasNaTurma(): Boolean {
+
+        if (listaAluno.size < quantidadeMaxAlunos){return true}
+        else{
+            println("Turma Completa. Capacidade máxima de alunos: ${quantidadeMaxAlunos}")
+            return false
+        }
     }
 }
 
