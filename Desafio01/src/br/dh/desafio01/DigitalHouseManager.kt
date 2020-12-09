@@ -101,57 +101,28 @@ class DigitalHouseManager {
 
         if (curso.vagasNaTurma()) {
         } else {
-            println("Não foi possível fazer  matrícula de ${aluno} .Curso com capacidade máxima de alunos")
+            println("Não foi possível fazer  matrícula de ${aluno.nome} .Curso com capacidade máxima de alunos")
         }
 
     }
 
-    fun vagasNaTurma(quantidadeMaxAlunos: Int): Int {
-        val quantidadeMaxAlunos: Int.Companion = Int
-        if (listaAluno.size < quantidadeMaxAlunos.MAX_VALUE) {
-            return listaAluno.size
-        } else {
-            println("Turma Lotada ${listaAluno.size}. Capacidade máxima de alunos: $quantidadeMaxAlunos")
-            return -1
-        }
-    }
-
-    fun alocarProfessores(codCurso: Int, codProfessorTitular: Int, codProfessorAdjunto: Int) {
-        val titular = encontrarProfessor(codProfessorTitular)
-        val adjunto = encontrarProfessor(codProfessorAdjunto)
-        val curso = encontrarCurso(codCurso)
+    fun alocarProfessores( codCurso: Int, codProfessorTitular: Int, codProfessorAdjunto: Int) {
+        var titular: ProfessorTitular? = null
+        var adjunto: ProfessorAdjunto? = null
+        var curso: Curso? = null
 
         if (titular != null && adjunto != null && curso != null) {
-
-            if (curso.professorAdjunto == null && curso.professorTitular == null) {
-                curso.professorAdjunto = adjunto as ProfessorAdjunto?
-                curso.professorTitular = titular as ProfessorTitular?
-                println("Professores ${titular} e ${adjunto} alocados no curso ${curso}")
-            } else {
-                println("O curso ${curso} já possui os professores ${curso.professorTitular?.nome} e ${curso.professorAdjunto?.nome} alocados")
-            }
-        } else {
-            println("Dados para alocação não encontrados")
-        }
-    } 
-    private fun encontrarProfessor(codProfessorTitular: Int, codProfessorAdjunto: Int): Professor? {
-        var professorEncontrado: Professor? = null
-        listaProfessor.forEach { professor ->
-            if (professor.codProfessor == codProfessorTitular && professor.codProfessor == codProfessorAdjunto) {
-                professorEncontrado = professor
-            }
-        }
-            return professorEncontrado
-    }
-
-
-        private fun encontrarCurso(codCurso: Int): Curso? {
-            var cursoEncontrado: Curso? = null
-            listaCurso.forEach { curso ->
-                if (curso.codCurso == codCurso) {
-                    cursoEncontrado = curso
+            for (professor in listaProfessor) {
+                if (professor.codProfessor == codProfessorTitular && professor is ProfessorTitular &&
+                        professor.codProfessor == codProfessorAdjunto && professor is ProfessorAdjunto) {
+                    titular = titular
+                }
+                if (titular == null) {
+                    println("Não foi possível alocar! Professor titular não encontrado.");
+                    return;
                 }
             }
-            return cursoEncontrado
         }
+    }
 }
+
