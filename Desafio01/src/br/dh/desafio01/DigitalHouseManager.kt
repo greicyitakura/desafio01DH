@@ -9,7 +9,6 @@ class DigitalHouseManager {
     var listaProfessorTitular = mutableListOf<ProfessorTitular>()
     var listaProfessorAdjunto = mutableListOf<ProfessorAdjunto>()
     var listaCurso = mutableListOf<Curso>()
-    var listaMatricula = mutableListOf<Matricula>()
     var listaProfessor = mutableListOf<Professor>()
 
 
@@ -97,14 +96,21 @@ class DigitalHouseManager {
     fun matricularAlunoCurso(codAluno: Int, codCurso: Int) {
 
         val aluno = listaAluno[verificarCodAluno(codAluno)]
-        val curso = listaCurso[verificarCodCurso(codCurso)]
+        var curso = listaCurso[verificarCodCurso(codCurso)]
 
-        if (curso.vagasNaTurma()) {
-        } else {
-            println("Não foi possível fazer  matrícula de ${aluno.nome} .Curso com capacidade máxima de alunos")
+        if (listaCurso.size > 0) {
+            for (i in 0..listaCurso.size - 1) {
+                if (listaCurso.get(i).codCurso == codCurso) {
+                    curso = listaCurso.get(i);
+                }
+            }
         }
-
+        if (listaCurso == null) {
+            println("Não foi possível matricular o aluno! Curso não encontrado.");
+            return;
+        }
     }
+
 
     fun alocarProfessores( codCurso: Int, codProfessorTitular: Int, codProfessorAdjunto: Int) {
         var titular: ProfessorTitular? = null
@@ -125,4 +131,5 @@ class DigitalHouseManager {
         }
     }
 }
+
 
