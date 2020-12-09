@@ -15,9 +15,12 @@ fun main () {
     digitalHouseManager.registrarProfessorAdjunto("Carmen", "Dorival", 3, 100)
     digitalHouseManager.registrarProfessorAdjunto("Denis", "Ebano", 4, 120)
 
+
     // registro de curso
     digitalHouseManager.registrarCurso("FullStack", 20001, 3)
     digitalHouseManager.registrarCurso("Android", 20002, 2)
+
+    //digitalHouseManager.excluirCurso("FullStack", 20001)
 
 
     // Matricula de Alunos
@@ -34,13 +37,16 @@ fun main () {
     digitalHouseManager.matricularAlunoCurso(12, 20001)
     digitalHouseManager.matricularAlunoCurso(13,20001)
     digitalHouseManager.matricularAlunoCurso(14,20001)
+   // digitalHouseManager.matricularAlunoCurso(16,20001)
 
     digitalHouseManager.matricularAlunoCurso(16,20002)
     digitalHouseManager.matricularAlunoCurso(15,20002)
 
-    println(digitalHouseManager.listaCurso.size)
+   //println(digitalHouseManager.listaCurso.size)
 
 
     //Alocar Professor
+    digitalHouseManager.alocarProfessores(20001,1,3,)
+    digitalHouseManager.alocarProfessores(20002,2,4,)
 }
 
