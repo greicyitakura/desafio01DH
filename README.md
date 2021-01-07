@@ -3,7 +3,7 @@
 
 ### Desenvolvimento Mobile
 
-# O desafio era entregar um sitema escolar, onde devia ser instaciado as classes e objetos.
+### O desafio era entregar um sitema escolar, onde devia ser instaciado as classes e objetos.
 
 ## O que eu aprendi
 - Programação Orienta a Objetos
